@@ -12,7 +12,7 @@ from enum import Enum
 
 class RegisterRequest(BaseModel):
     email: EmailStr
-    phone: str = Field(..., pattern=r"^\+91\d{10}$", examples=["+919876543210"])
+    phone: str = Field(..., pattern=r"^\+91\d{10}$", examples=["+911234567890"])
     password: str = Field(..., min_length=8)
     full_name: str = Field(..., min_length=2)
     pan_number: Optional[str] = Field(None, pattern=r"^[A-Z]{5}\d{4}[A-Z]$")
@@ -23,7 +23,7 @@ class RegisterRequest(BaseModel):
 
 
 class LoginRequest(BaseModel):
-    phone: str = Field(..., examples=["+919876543210"])
+    phone: str = Field(..., examples=["+911234567890"])
     password: str
 
 

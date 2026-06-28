@@ -99,7 +99,7 @@ async def seed_database(db: AsyncSession):
     demo_user = User(
         id=demo_user_id,
         email="demo@idbibank.co.in",
-        phone="+919876543210",
+        phone="+911234567890",
         hashed_password=get_password_hash("demo1234"),
         full_name="Rajesh Kumar Sharma",
         pan_number="ABCPS1234D",
@@ -360,4 +360,4 @@ async def seed_database(db: AsyncSession):
 
     await db.flush()
     print("✅ Database seeded successfully with synthetic Indian banking data!")
-    print(f"   Demo login: phone=+919876543210, password=demo1234")
+    print(f"   Demo login: phone=+911234567890, password=demo1234")

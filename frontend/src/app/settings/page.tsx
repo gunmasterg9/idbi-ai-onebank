@@ -27,7 +27,7 @@ export default function SettingsPage() {
             </div>
             <div>
               <label className="text-slate-400 block mb-1">Registered Phone</label>
-              <input type="text" readOnly value="+91 98765 43210" className="input-field text-xs py-2 bg-slate-900/60" />
+              <input type="text" readOnly value="+91 12345 67890" className="input-field text-xs py-2 bg-slate-900/60" />
             </div>
             <div>
               <label className="text-slate-400 block mb-1">Email Address</label>
