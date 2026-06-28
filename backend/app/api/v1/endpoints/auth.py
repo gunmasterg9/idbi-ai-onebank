@@ -61,7 +61,12 @@ async def register(request: RegisterRequest, db: AsyncSession = Depends(get_db))
 @router.post("/login", response_model=TokenResponse)
 async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)):
     """Login with phone and password."""
-    result = await db.execute(select(User).where(User.phone == request.phone))
+    clean_phone = request.phone.strip()
+    alt_phone = f"+91{clean_phone}" if not clean_phone.startswith("+") else clean_phone.replace("+91", "")
+    
+    result = await db.execute(
+        select(User).where((User.phone == clean_phone) | (User.phone == alt_phone))
+    )
     user = result.scalar_one_or_none()
 
     if not user or not verify_password(request.password, user.hashed_password):

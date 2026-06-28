@@ -18,7 +18,7 @@ import {
 
 export default function LoginPage() {
   const router = useRouter();
-  const [phone, setPhone] = useState("+911234567890");
+  const [phone, setPhone] = useState("1234567890");
   const [password, setPassword] = useState("demo1234");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -120,7 +120,7 @@ export default function LoginPage() {
                       className="input-field pl-10"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+91 12345 67890"
+                      placeholder="1234567890"
                     />
                   </div>
                 </div>
@@ -198,7 +198,7 @@ export default function LoginPage() {
               </motion.button>
 
               <p className="text-center text-xs mt-6" style={{ color: "var(--text-muted)" }}>
-                Demo credentials: +911234567890 / demo1234
+                Demo credentials: 1234567890 / demo1234
               </p>
             </>
           ) : (

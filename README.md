@@ -83,7 +83,7 @@ docker-compose -f docker/docker-compose.yml up --build
 ### Demo Credentials
 
 ```
-Phone: +911234567890
+Phone: 1234567890
 Password: demo1234
 OTP: 123456
 ```
