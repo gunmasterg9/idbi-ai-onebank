@@ -192,18 +192,42 @@ export default function LandingPage() {
         style={{ background: "radial-gradient(circle, #FFD700 0%, transparent 70%)" }}
       />
 
+      {/* ─── Official IDBI Corporate Utility Bar ─── */}
+      <div className="relative z-20 idbi-top-bar px-6 lg:px-12 py-1.5 flex justify-between items-center hidden sm:flex">
+        <div className="flex items-center gap-6">
+          <span className="font-semibold text-white cursor-pointer hover:underline">Personal</span>
+          <span className="cursor-pointer hover:text-white transition-colors">Corporate</span>
+          <span className="cursor-pointer hover:text-white transition-colors">MSME</span>
+          <span className="cursor-pointer hover:text-white transition-colors">Agri Banking</span>
+          <span className="cursor-pointer hover:text-white transition-colors">NRI Banking</span>
+          <span className="cursor-pointer hover:text-white transition-colors text-yellow-400 font-medium">GIFT City</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span>Toll Free: <strong className="text-white">1800 209 4324</strong></span>
+          <span>•</span>
+          <span className="text-red-400 font-semibold cursor-pointer">Block Card/UPI</span>
+        </div>
+      </div>
+
+      {/* ─── Live Ticker Bar ────────────────────── */}
+      <div className="relative z-20 idbi-ticker px-6 py-1.5 text-center flex items-center justify-center gap-2">
+        <span className="bg-white text-red-600 text-[10px] uppercase font-extrabold px-1.5 py-0.5 rounded">Announcements</span>
+        <span>Welcome to IDBI Bank Digital Banking Platform • Special FD Interest Rates 7.25% p.a. • Beware of fraudulent SMS/Calls</span>
+      </div>
+
       {/* ─── Navigation ──────────────────────────── */}
       <nav className="relative z-10 flex items-center justify-between px-6 lg:px-12 py-4"
-           style={{ background: "rgba(10,14,26,0.6)", backdropFilter: "blur(20px)", borderBottom: "1px solid var(--border-default)" }}>
+           style={{ background: "rgba(10,14,26,0.8)", backdropFilter: "blur(20px)", borderBottom: "1px solid var(--border-default)" }}>
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-               style={{ background: "var(--gradient-primary)" }}>
-            <Landmark className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg"
+               style={{ background: "#003865", border: "1px solid #00539F" }}>
+            <Landmark className="w-5 h-5 text-yellow-400" />
           </div>
           <div>
-            <h1 className="text-lg font-bold tracking-tight" style={{ fontFamily: "Outfit, sans-serif" }}>
-              IDBI AI <span className="gradient-text-gold">OneBank</span>
+            <h1 className="text-lg font-extrabold tracking-tight text-white" style={{ fontFamily: "Outfit, sans-serif" }}>
+              IDBI BANK <span className="gradient-text-gold">OneBank</span>
             </h1>
+            <p className="text-[9px] text-slate-400 tracking-wider uppercase font-semibold">Bank Aisa Dost Jaisa</p>
           </div>
         </div>
 
@@ -218,8 +242,8 @@ export default function LandingPage() {
           <Link href="/login" className="btn-secondary text-sm py-2 px-4">
             Login
           </Link>
-          <Link href="/dashboard" className="btn-primary text-sm py-2 px-4">
-            Get Started <ArrowRight className="inline w-4 h-4 ml-1" />
+          <Link href="/login" className="btn-idbi-red text-sm py-2 px-4 flex items-center gap-1.5">
+            <Lock className="w-3.5 h-3.5" /> NetBanking
           </Link>
         </div>
       </nav>

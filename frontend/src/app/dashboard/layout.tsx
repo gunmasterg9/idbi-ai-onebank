@@ -57,23 +57,23 @@ export default function DashboardLayout({
         {/* Logo */}
         <div
           className="flex items-center gap-3 px-5 py-5"
-          style={{ borderBottom: "1px solid var(--border-default)" }}
+          style={{ borderBottom: "1px solid var(--border-default)", background: "#00284e" }}
         >
           <div
-            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-            style={{ background: "var(--gradient-primary)" }}
+            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md"
+            style={{ background: "#003865", border: "1px solid #00539F" }}
           >
-            <Landmark className="w-5 h-5 text-white" />
+            <Landmark className="w-5 h-5 text-yellow-400" />
           </div>
           <div>
             <h1
-              className="text-base font-bold leading-tight"
+              className="text-base font-extrabold leading-tight text-white"
               style={{ fontFamily: "Outfit, sans-serif" }}
             >
-              IDBI AI <span className="gradient-text-gold">OneBank</span>
+              IDBI BANK <span className="gradient-text-gold">OneBank</span>
             </h1>
-            <p className="text-[10px]" style={{ color: "var(--text-muted)" }}>
-              Unified Banking Platform
+            <p className="text-[9px] text-slate-300 font-medium uppercase tracking-wider">
+              Bank Aisa Dost Jaisa
             </p>
           </div>
         </div>
