@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Wallet,
   TrendingUp,
@@ -23,6 +25,8 @@ import {
   CheckCircle2,
   Clock,
   IndianRupee,
+  X,
+  Send,
 } from "lucide-react";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
@@ -123,7 +127,30 @@ function CustomTooltip({ active, payload, label }: any) {
 
 /* ─── Dashboard Page ─────────────────────────────────── */
 export default function DashboardPage() {
+  const router = useRouter();
   const [showBalance, setShowBalance] = useState(true);
+  const [activeModal, setActiveModal] = useState<"send" | "bills" | "fd" | null>(null);
+  const [modalSuccess, setModalSuccess] = useState<string | null>(null);
+  const [transferAmount, setTransferAmount] = useState("5000");
+  const [transferRecipient, setTransferRecipient] = useState("rahul@upi");
+
+  const handleQuickAction = (label: string) => {
+    setModalSuccess(null);
+    if (label === "Send Money") setActiveModal("send");
+    else if (label === "Pay Bills") setActiveModal("bills");
+    else if (label === "Invest Now") router.push("/investments");
+    else if (label === "Open FD") setActiveModal("fd");
+    else if (label === "Card Controls") router.push("/fraud-center");
+    else if (label === "AI Advisor") router.push("/ai-chat");
+  };
+
+  const executeAction = (msg: string) => {
+    setModalSuccess(msg);
+    setTimeout(() => {
+      setActiveModal(null);
+      setModalSuccess(null);
+    }, 2000);
+  };
 
   return (
     <div className="space-y-6">
@@ -466,7 +493,8 @@ export default function DashboardPage() {
           ].map((action) => (
             <motion.button
               key={action.label}
-              className="flex flex-col items-center gap-2 p-4 rounded-xl text-center transition-colors"
+              onClick={() => handleQuickAction(action.label)}
+              className="flex flex-col items-center gap-2 p-4 rounded-xl text-center transition-colors cursor-pointer"
               style={{ background: "var(--bg-elevated)" }}
               whileHover={{ scale: 1.05, background: "var(--bg-card-hover)" }}
               whileTap={{ scale: 0.95 }}
@@ -479,6 +507,117 @@ export default function DashboardPage() {
           ))}
         </div>
       </motion.div>
+
+      {/* ─── Interactive Quick Action Modals ─────── */}
+      <AnimatePresence>
+        {activeModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="glass-card p-6 w-full max-w-md relative bg-slate-900 border border-slate-700 shadow-2xl"
+            >
+              <button
+                onClick={() => setActiveModal(null)}
+                className="absolute top-4 right-4 text-slate-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {modalSuccess ? (
+                <div className="text-center py-8 space-y-3">
+                  <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto animate-bounce" />
+                  <h3 className="text-lg font-bold text-white">{modalSuccess}</h3>
+                  <p className="text-xs text-slate-400">Transaction ID: TXN{Math.floor(Math.random()*899999+100000)}</p>
+                </div>
+              ) : (
+                <>
+                  {activeModal === "send" && (
+                    <div className="space-y-4">
+                      <h3 className="text-base font-bold flex items-center gap-2 text-white">
+                        <Send className="w-5 h-5 text-blue-400" /> Instant Money Transfer
+                      </h3>
+                      <div>
+                        <label className="text-xs text-slate-400 block mb-1">Payee UPI ID or Account #</label>
+                        <input
+                          type="text"
+                          className="input-field text-sm"
+                          value={transferRecipient}
+                          onChange={(e) => setTransferRecipient(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-slate-400 block mb-1">Amount (₹)</label>
+                        <input
+                          type="number"
+                          className="input-field text-sm font-bold text-white"
+                          value={transferAmount}
+                          onChange={(e) => setTransferAmount(e.target.value)}
+                        />
+                      </div>
+                      <button
+                        onClick={() => executeAction(`₹${transferAmount} successfully transferred to ${transferRecipient}!`)}
+                        className="btn-primary w-full py-3 text-sm flex items-center justify-center gap-2"
+                      >
+                        Confirm & Pay Instant
+                      </button>
+                    </div>
+                  )}
+
+                  {activeModal === "bills" && (
+                    <div className="space-y-4">
+                      <h3 className="text-base font-bold flex items-center gap-2 text-white">
+                        📱 Quick Utility Bill Pay
+                      </h3>
+                      <div>
+                        <label className="text-xs text-slate-400 block mb-1">Select Biller</label>
+                        <select className="input-field text-sm bg-slate-800">
+                          <option>Jio Postpaid Recharge (₹699)</option>
+                          <option>BESCOM Electricity Bill (₹1,450)</option>
+                          <option>Mahanagar Gas Bill (₹820)</option>
+                        </select>
+                      </div>
+                      <button
+                        onClick={() => executeAction("Utility bill payment of ₹699 processed successfully!")}
+                        className="btn-idbi-red w-full py-3 text-sm"
+                      >
+                        Pay Bill Now
+                      </button>
+                    </div>
+                  )}
+
+                  {activeModal === "fd" && (
+                    <div className="space-y-4">
+                      <h3 className="text-base font-bold flex items-center gap-2 text-white">
+                        🏦 Create IDBI Fixed Deposit
+                      </h3>
+                      <div>
+                        <label className="text-xs text-slate-400 block mb-1">FD Amount (₹)</label>
+                        <input type="number" defaultValue="50000" className="input-field text-sm font-bold text-white" />
+                      </div>
+                      <div>
+                        <label className="text-xs text-slate-400 block mb-1">Tenure</label>
+                        <select className="input-field text-sm bg-slate-800">
+                          <option>1 Year @ 7.25% p.a. (Recommended)</option>
+                          <option>2 Years @ 7.10% p.a.</option>
+                          <option>5 Years (Tax Saver 80C) @ 6.90% p.a.</option>
+                        </select>
+                      </div>
+                      <button
+                        onClick={() => executeAction("Fixed Deposit of ₹50,000 created at 7.25% p.a.!")}
+                        className="btn-primary w-full py-3 text-sm"
+                      >
+                        Open FD Immediately
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
