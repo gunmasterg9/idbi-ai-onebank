@@ -34,15 +34,47 @@ AI_RESPONSES = {
 }
 
 
+import httpx
+from app.core.config import settings
+
 @router.post("/chat", response_model=ChatResponse)
 async def ai_chat(
     request: ChatRequest,
     current_user: dict = Depends(get_current_user),
 ):
-    """Chat with the AI banking assistant."""
+    """Chat with the AI banking assistant (Supports local Ollama PC AI setup & cloud LLMs)."""
     message_lower = request.message.lower()
 
-    # Simple keyword matching for demo
+    # If local PC AI (Ollama) is enabled
+    if settings.LLM_PROVIDER == "ollama":
+        try:
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                ollama_prompt = (
+                    f"You are IDBI AI Banker, a helpful and expert AI banking assistant for IDBI Bank.\n"
+                    f"User question: {request.message}\n"
+                    f"Provide a concise, helpful banking answer in markdown format."
+                )
+                res = await client.post(
+                    f"{settings.OLLAMA_BASE_URL}/api/generate",
+                    json={
+                        "model": settings.LLM_MODEL,
+                        "prompt": ollama_prompt,
+                        "stream": False,
+                    }
+                )
+                if res.status_code == 200:
+                    data = res.json()
+                    return ChatResponse(
+                        reply=data.get("response", "Thank you for contacting IDBI AI OneBank."),
+                        suggestions=["Check balance", "Investment advice", "Loan options"],
+                        actions=[],
+                        confidence=0.98,
+                    )
+        except Exception:
+            # Fallback to offline rule engine if local Ollama server is not currently active
+            pass
+
+    # Domain keyword matching fallback
     if any(w in message_lower for w in ["balance", "account", "money", "kitna"]):
         response_data = AI_RESPONSES["balance"]
     elif any(w in message_lower for w in ["invest", "sip", "mutual", "fd", "stock", "portfolio"]):

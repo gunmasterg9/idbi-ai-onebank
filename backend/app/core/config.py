@@ -28,8 +28,9 @@ class Settings(BaseSettings):
     # AI/LLM
     GEMINI_API_KEY: Optional[str] = None
     OPENAI_API_KEY: Optional[str] = None
-    LLM_PROVIDER: str = "gemini"  # "gemini" or "openai"
-    LLM_MODEL: str = "gemini-2.0-flash"
+    LLM_PROVIDER: str = "ollama"  # "ollama", "gemini", "openai", or "simulation"
+    LLM_MODEL: str = "llama3.2"
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
 
     # CORS
     CORS_ORIGINS: list[str] = [
