@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  # ─── Frontend ──────────────────────────────
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    volumes:
+      - ../frontend/src:/app/src
+    networks:
+      - onebank
+
+  # ─── Backend ───────────────────────────────
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./idbi_onebank.db
+      - SECRET_KEY=idbi-onebank-docker-secret-key-2026
+      - DEBUG=true
+      - CORS_ORIGINS=["http://localhost:3000","http://frontend:3000"]
+    volumes:
+      - ../backend:/app
+      - backend-data:/app/data
+    networks:
+      - onebank
+
+volumes:
+  backend-data:
+
+networks:
+  onebank:
+    driver: bridge
