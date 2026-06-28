@@ -157,8 +157,16 @@ export default function DashboardLayout({
           </div>
         </div>
 
-        {/* Right Side */}
-        <div className="flex items-center gap-3">
+        {/* Right Side Online Banking Portal Info */}
+        <div className="flex items-center gap-4">
+          <div className="hidden lg:flex flex-col items-end text-[10px] text-slate-400 border-r border-slate-700/50 pr-4">
+            <span className="flex items-center gap-1 text-emerald-400 font-semibold">
+              <Shield className="w-3 h-3" /> 256-bit EV SSL Encrypted
+            </span>
+            <span>Customer ID: <strong className="text-white">10098421</strong></span>
+            <span>Last Login: <strong className="text-slate-300">28-Jun-2026 11:30 PM IST</strong></span>
+          </div>
+
           {/* Notifications */}
           <button
             className="relative p-2 rounded-lg transition-colors"
@@ -180,10 +188,15 @@ export default function DashboardLayout({
             </div>
             <div className="hidden md:block">
               <div className="text-xs font-semibold">Rajesh Kumar</div>
-              <div className="text-[10px]" style={{ color: "var(--text-muted)" }}>Premium</div>
+              <div className="text-[10px]" style={{ color: "var(--text-muted)" }}>HNI Preferred</div>
             </div>
-            <ChevronDown className="w-3 h-3 hidden md:block" style={{ color: "var(--text-muted)" }} />
           </div>
+
+          {/* Online Banking Logout */}
+          <Link href="/login" className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors flex items-center gap-1 text-xs font-semibold">
+            <LogOut className="w-4 h-4" />
+            <span className="hidden sm:inline">Logout</span>
+          </Link>
         </div>
       </header>
 

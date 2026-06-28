@@ -127,6 +127,15 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      {/* ─── NetBanking Security Advisory Ticker ─── */}
+      <div className="p-3 rounded-xl bg-slate-900/80 border border-amber-500/30 flex items-center justify-between text-xs text-amber-300">
+        <div className="flex items-center gap-2">
+          <Shield className="w-4 h-4 text-amber-400 flex-shrink-0" />
+          <span><strong>Security Advisory:</strong> Never share your NetBanking password, OTP, or UPI PIN with anyone. IDBI Bank will never call asking for your credentials.</span>
+        </div>
+        <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-mono hidden sm:inline">EV SSL SECURE</span>
+      </div>
+
       {/* ─── Welcome Header ──────────────────────── */}
       <motion.div
         className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
@@ -135,15 +144,15 @@ export default function DashboardPage() {
       >
         <div>
           <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "Outfit, sans-serif" }}>
-            Good Evening, <span className="gradient-text">Rajesh</span> 👋
+            NetBanking Portal <span className="gradient-text">Overview</span> 👋
           </h1>
-          <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
-            Here&apos;s your financial overview for today
+          <p className="text-xs mt-1 text-slate-400">
+            Primary Savings Account: <strong className="text-white font-mono">10012345678901</strong> • IFSC: <strong className="text-white font-mono">IBKL0000001</strong> • Fort Branch, Mumbai
           </p>
         </div>
         <div className="flex items-center gap-2">
           <span className="badge badge-green">
-            <CheckCircle2 className="w-3 h-3" /> All Systems Normal
+            <CheckCircle2 className="w-3 h-3" /> Active NetBanking
           </span>
           <span className="badge badge-blue">
             <Sparkles className="w-3 h-3" /> AI Health: 85.5
