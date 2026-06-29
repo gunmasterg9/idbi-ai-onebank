@@ -132,7 +132,7 @@ export default function MSMEHealthPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
               <XAxis dataKey="month" tick={{ fill: "#64748b", fontSize: 12 }} axisLine={false} />
               <YAxis tick={{ fill: "#64748b", fontSize: 12 }} axisLine={false} tickFormatter={(v) => `₹${v/100000}L`} />
-              <Tooltip formatter={(v: number) => `₹${(v/1000).toFixed(0)}K`} />
+              <Tooltip formatter={(v: any) => `₹${(Number(v || 0)/1000).toFixed(0)}K`} />
               <Bar dataKey="inflow" fill="#22c55e" radius={[4, 4, 0, 0]} name="Inflow" />
               <Bar dataKey="outflow" fill="#ef4444" radius={[4, 4, 0, 0]} name="Outflow" />
             </BarChart>

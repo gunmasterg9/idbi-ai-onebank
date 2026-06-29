@@ -105,7 +105,7 @@ export default function InvestmentsPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
               <XAxis dataKey="month" tick={{ fill: "#64748b", fontSize: 12 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: "#64748b", fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(v) => `₹${v/100000}L`} />
-              <Tooltip formatter={(v: number) => `₹${(v/100000).toFixed(1)}L`} />
+              <Tooltip formatter={(v: any) => `₹${(Number(v || 0)/100000).toFixed(1)}L`} />
               <Area type="monotone" dataKey="value" stroke="#22c55e" fill="url(#portfolioGrad)" strokeWidth={2} />
             </AreaChart>
           </ResponsiveContainer>

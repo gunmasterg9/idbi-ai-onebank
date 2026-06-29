@@ -62,7 +62,7 @@ export default function AnalyticsPage() {
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
             <XAxis dataKey="month" tick={{ fill: "#64748b", fontSize: 12 }} />
             <YAxis tick={{ fill: "#64748b", fontSize: 12 }} tickFormatter={(v) => `₹${v/1000}K`} />
-            <Tooltip formatter={(v: number) => `₹${v.toLocaleString("en-IN")}`} />
+            <Tooltip formatter={(v: any) => `₹${Number(v || 0).toLocaleString("en-IN")}`} />
             <Bar dataKey="savings" fill="#22c55e" name="Savings" radius={[4, 4, 0, 0]} />
             <Bar dataKey="investment" fill="#60a5fa" name="Investments" radius={[4, 4, 0, 0]} />
             <Bar dataKey="debt" fill="#ef4444" name="Debt Service" radius={[4, 4, 0, 0]} />

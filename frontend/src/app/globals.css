@@ -3,55 +3,63 @@
 /* ─── IDBI AI OneBank Design System ──────────────────── */
 
 :root {
-  /* IDBI Brand Colors */
-  --idbi-blue: #00539F;
-  --idbi-blue-light: #1a6fbf;
-  --idbi-blue-dark: #003d75;
+  /* Specified Color Palette */
+  --idbi-green: #008C45;
+  --dark-navy: #061B33;
+  --white: #FFFFFF;
+  --soft-gray: #F5F7FA;
+  --accent-blue: #00B8FF;
+  --gold-accent: #F8B500;
+
+  /* Legacy Brand Aliases */
+  --idbi-blue: #008C45;
+  --idbi-blue-light: #00B8FF;
+  --idbi-blue-dark: #061B33;
   --idbi-red: #E31E24;
-  --idbi-gold: #FFD700;
+  --idbi-gold: #F8B500;
   --idbi-gold-dim: #B8960C;
 
   /* Dark Theme (Default) */
-  --bg-primary: #0a0e1a;
-  --bg-secondary: #111827;
-  --bg-card: #1a1f2e;
-  --bg-card-hover: #222840;
-  --bg-elevated: #252b3b;
-  --bg-glass: rgba(26, 31, 46, 0.7);
+  --bg-primary: #061B33;
+  --bg-secondary: #0b2341;
+  --bg-card: rgba(11, 35, 65, 0.65);
+  --bg-card-hover: rgba(16, 47, 85, 0.85);
+  --bg-elevated: #102a4d;
+  --bg-glass: rgba(6, 27, 51, 0.7);
 
-  --text-primary: #f0f4ff;
+  --text-primary: #FFFFFF;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --text-accent: #60a5fa;
+  --text-accent: #00B8FF;
 
-  --border-default: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.15);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(0, 184, 255, 0.35);
 
   /* Accent Colors */
-  --accent-green: #22c55e;
-  --accent-green-bg: rgba(34, 197, 94, 0.1);
+  --accent-green: #008C45;
+  --accent-green-bg: rgba(0, 140, 69, 0.15);
   --accent-red: #ef4444;
-  --accent-red-bg: rgba(239, 68, 68, 0.1);
-  --accent-yellow: #eab308;
-  --accent-yellow-bg: rgba(234, 179, 8, 0.1);
+  --accent-red-bg: rgba(239, 68, 68, 0.15);
+  --accent-yellow: #F8B500;
+  --accent-yellow-bg: rgba(248, 181, 0, 0.15);
   --accent-purple: #a855f7;
-  --accent-purple-bg: rgba(168, 85, 247, 0.1);
-  --accent-cyan: #06b6d4;
-  --accent-cyan-bg: rgba(6, 182, 212, 0.1);
+  --accent-purple-bg: rgba(168, 85, 247, 0.15);
+  --accent-cyan: #00B8FF;
+  --accent-cyan-bg: rgba(0, 184, 255, 0.15);
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #00539F 0%, #1a6fbf 50%, #60a5fa 100%);
-  --gradient-gold: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-  --gradient-card: linear-gradient(135deg, rgba(26, 31, 46, 0.9) 0%, rgba(37, 43, 59, 0.9) 100%);
-  --gradient-hero: linear-gradient(135deg, #0a0e1a 0%, #111827 30%, #00539F20 60%, #0a0e1a 100%);
+  --gradient-primary: linear-gradient(135deg, #008C45 0%, #00B8FF 100%);
+  --gradient-gold: linear-gradient(135deg, #F8B500 0%, #FFA500 100%);
+  --gradient-card: linear-gradient(135deg, rgba(11, 35, 65, 0.8) 0%, rgba(16, 47, 85, 0.6) 100%);
+  --gradient-hero: radial-gradient(circle at 50% 20%, rgba(0, 184, 255, 0.18) 0%, rgba(0, 140, 69, 0.15) 35%, #061B33 80%);
 
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 40px rgba(0, 83, 159, 0.3);
-  --shadow-gold-glow: 0 0 30px rgba(255, 215, 0, 0.2);
+  --shadow-glow: 0 0 35px rgba(0, 184, 255, 0.25);
+  --shadow-gold-glow: 0 0 30px rgba(248, 181, 0, 0.25);
 
   /* Spacing */
   --sidebar-width: 280px;
@@ -87,16 +95,28 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg-primary);
+  background: var(--dark-navy);
   color: var(--text-primary);
   overflow-x: hidden;
   min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+.font-heading {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-numbers, .font-num {
+  font-family: 'Manrope', sans-serif;
 }
 
 /* ─── Scrollbar ──────────────────────────────────────── */

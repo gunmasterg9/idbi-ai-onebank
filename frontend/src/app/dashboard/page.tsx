@@ -358,7 +358,7 @@ export default function DashboardPage() {
                   <Cell key={i} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number) => `₹${value.toLocaleString("en-IN")}`} />
+              <Tooltip formatter={(value: any) => `₹${Number(value || 0).toLocaleString("en-IN")}`} />
             </PieChart>
           </ResponsiveContainer>
           <div className="space-y-2 mt-2">
