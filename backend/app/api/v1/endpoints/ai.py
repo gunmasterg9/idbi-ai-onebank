@@ -37,44 +37,39 @@ AI_RESPONSES = {
 import httpx
 from app.core.config import settings
 
+from app.services.rag_service import query_knowledge_base, generate_llm_response
+
 @router.post("/chat", response_model=ChatResponse)
 async def ai_chat(
     request: ChatRequest,
     current_user: dict = Depends(get_current_user),
 ):
-    """Chat with the AI banking assistant (Supports local Ollama PC AI setup & cloud LLMs)."""
+    """Chat with the AI banking assistant (utilizes PGVector semantic search and Gemini RAG)."""
     message_lower = request.message.lower()
 
-    # If local PC AI (Ollama) is enabled
-    if settings.LLM_PROVIDER == "ollama":
+    # If Gemini API Key is configured, execute true RAG pipeline
+    if settings.GEMINI_API_KEY:
         try:
-            async with httpx.AsyncClient(timeout=10.0) as client:
-                ollama_prompt = (
-                    f"You are IDBI AI Banker, a helpful and expert AI banking assistant for IDBI Bank.\n"
-                    f"User question: {request.message}\n"
-                    f"Provide a concise, helpful banking answer in markdown format."
+            # 1. Retrieve closest knowledge base document chunks
+            contexts = await query_knowledge_base(request.message, limit=2)
+            context_str = "\n\n".join(
+                [f"Document: {c['title']}\nContent: {c['content']}" for c in contexts]
+            )
+            
+            # 2. Synthesize response using LLM
+            reply = generate_llm_response(request.message, context=context_str)
+            if reply and "API key is not configured" not in reply:
+                return ChatResponse(
+                    reply=reply,
+                    suggestions=["Compare loan interest rates", "Open savings account", "Calculate EMI"],
+                    actions=[],
+                    confidence=0.95
                 )
-                res = await client.post(
-                    f"{settings.OLLAMA_BASE_URL}/api/generate",
-                    json={
-                        "model": settings.LLM_MODEL,
-                        "prompt": ollama_prompt,
-                        "stream": False,
-                    }
-                )
-                if res.status_code == 200:
-                    data = res.json()
-                    return ChatResponse(
-                        reply=data.get("response", "Thank you for contacting IDBI AI OneBank."),
-                        suggestions=["Check balance", "Investment advice", "Loan options"],
-                        actions=[],
-                        confidence=0.98,
-                    )
-        except Exception:
-            # Fallback to offline rule engine if local Ollama server is not currently active
+        except Exception as e:
+            logger.error(f"Failed RAG chat execution: {e}")
             pass
 
-    # Domain keyword matching fallback
+    # Domain keyword matching fallback if RAG is disabled or failed
     if any(w in message_lower for w in ["balance", "account", "money", "kitna"]):
         response_data = AI_RESPONSES["balance"]
     elif any(w in message_lower for w in ["invest", "sip", "mutual", "fd", "stock", "portfolio"]):
@@ -90,7 +85,7 @@ async def ai_chat(
         reply=response_data["reply"],
         suggestions=response_data.get("suggestions", []),
         actions=[],
-        confidence=0.92,
+        confidence=0.90,
     )
 
 

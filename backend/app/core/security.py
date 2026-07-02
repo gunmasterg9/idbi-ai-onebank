@@ -56,7 +56,7 @@ def decode_token(token: str) -> dict:
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ) -> dict:
-    """Dependency to get current authenticated user from JWT token."""
+    """Dependency to get current authenticated user from JWT token (dict payload fallback)."""
     payload = decode_token(credentials.credentials)
     user_id = payload.get("sub")
     if user_id is None:
@@ -64,4 +64,51 @@ async def get_current_user(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token payload",
         )
-    return {"user_id": user_id, "email": payload.get("email", "")}
+    return {"user_id": user_id, "email": payload.get("email", ""), "role": payload.get("role", "customer")}
+
+
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.core.database import get_db
+from app.models.models import User
+from sqlalchemy import select
+
+async def get_current_db_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: AsyncSession = Depends(get_db)
+) -> User:
+    """Dependency to retrieve the active User object directly from the database."""
+    payload = decode_token(credentials.credentials)
+    user_id = payload.get("sub")
+    if user_id is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token payload",
+        )
+    result = await db.execute(select(User).where(User.id == user_id))
+    user = result.scalar_one_or_none()
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found",
+        )
+    if not user.is_active:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="User account is deactivated",
+        )
+    return user
+
+
+class RoleChecker:
+    """RBAC dependency to restrict route access based on user role."""
+    def __init__(self, allowed_roles: list[str]):
+        self.allowed_roles = allowed_roles
+
+    def __call__(self, user: User = Depends(get_current_db_user)) -> User:
+        if user.role not in self.allowed_roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Access denied. Minimum role authorization required: {self.allowed_roles}",
+            )
+        return user
+

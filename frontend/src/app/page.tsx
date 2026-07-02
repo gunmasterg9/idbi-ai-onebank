@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 import {
   Brain,
   Shield,
@@ -243,88 +244,7 @@ export default function LandingPage() {
         ))}
       </div>
 
-      {/* ─── Official IDBI Corporate Utility Bar ─────── */}
-      <div className="relative z-20 px-6 lg:px-12 py-2 flex justify-between items-center text-xs border-b border-white/10 hidden sm:flex" style={{ background: "rgba(6, 27, 51, 0.9)" }}>
-        <div className="flex items-center gap-6 text-slate-300">
-          <span className="font-semibold text-white cursor-pointer hover:text-[#00B8FF] transition-colors">Personal</span>
-          <span className="cursor-pointer hover:text-white transition-colors">Corporate</span>
-          <span className="cursor-pointer hover:text-white transition-colors">MSME</span>
-          <span className="cursor-pointer hover:text-white transition-colors">Agri Banking</span>
-          <span className="cursor-pointer hover:text-white transition-colors">NRI Banking</span>
-          <span className="cursor-pointer font-semibold text-[#F8B500] hover:underline">GIFT City</span>
-        </div>
-        <div className="flex items-center gap-4 text-slate-300">
-          <span>Toll Free: <strong className="text-white font-numbers">1800 209 4324</strong></span>
-          <span className="opacity-40">•</span>
-          <span className="text-red-400 font-semibold cursor-pointer hover:underline">Block Card / UPI</span>
-        </div>
-      </div>
-
-      {/* ─── Live Ticker Bar ─────────────────────────── */}
-      <div className="relative z-20 px-6 py-2 text-xs font-medium flex items-center justify-center gap-3 text-white"
-           style={{ background: "linear-gradient(90deg, #008C45 0%, #061B33 50%, #00B8FF 100%)" }}>
-        <span className="bg-white text-[#061B33] text-[10px] uppercase font-extrabold px-2 py-0.5 rounded-full shadow-sm">
-          Announcements
-        </span>
-        <span className="tracking-wide">
-          Welcome to IDBI AI OneBank • Special FD Interest Rates 7.25% p.a. • Instant AI Loan Approval up to ₹25 Lakhs
-        </span>
-      </div>
-
-      {/* ─── Glass Navigation Bar ────────────────────── */}
-      <nav
-        className="sticky top-0 z-50 flex items-center justify-between px-6 lg:px-12 py-4 border-b transition-all duration-300"
-        style={{
-          background: "rgba(6, 27, 51, 0.75)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderColor: "rgba(255, 255, 255, 0.1)",
-        }}
-      >
-        <div className="flex items-center gap-3">
-          <div
-            className="w-11 h-11 rounded-xl flex items-center justify-center shadow-lg relative overflow-hidden group"
-            style={{
-              background: "linear-gradient(135deg, #008C45 0%, #061B33 100%)",
-              border: "1px solid rgba(0, 184, 255, 0.4)",
-            }}
-          >
-            <Landmark className="w-6 h-6 text-[#F8B500] relative z-10 transition-transform group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#00B8FF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          </div>
-          <div>
-            <h1 className="text-xl font-extrabold tracking-tight text-white font-heading">
-              IDBI BANK <span className="text-[#F8B500]">OneBank</span>
-            </h1>
-            <p className="text-[10px] text-slate-300 tracking-widest uppercase font-semibold">
-              Bank Aisa Dost Jaisa
-            </p>
-          </div>
-        </div>
-
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-          <a href="#features" className="hover:text-[#00B8FF] transition-colors">Features</a>
-          <a href="#modules" className="hover:text-[#00B8FF] transition-colors">AI Modules</a>
-          <a href="#architecture" className="hover:text-[#00B8FF] transition-colors">Architecture</a>
-          <a href="#contact" className="hover:text-[#00B8FF] transition-colors">Contact</a>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <Link href="/login" className="text-sm font-semibold px-5 py-2.5 rounded-xl border border-white/20 hover:border-[#00B8FF] text-white hover:bg-[#00B8FF]/10 transition-all">
-            Login
-          </Link>
-          <Link
-            href="/login"
-            className="text-sm font-semibold px-5 py-2.5 rounded-xl flex items-center gap-2 text-white shadow-lg transition-all transform hover:-translate-y-0.5"
-            style={{
-              background: "linear-gradient(135deg, #008C45 0%, #00B8FF 100%)",
-              boxShadow: "0 4px 20px rgba(0, 184, 255, 0.3)",
-            }}
-          >
-            <Lock className="w-4 h-4 text-[#F8B500]" /> NetBanking
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* ─── Hero Section (Full Screen) ──────────────── */}
       <section className="relative z-10 min-h-[calc(100vh-100px)] flex flex-col items-center justify-center text-center px-6 py-16 lg:py-24 max-w-7xl mx-auto">
@@ -585,125 +505,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── System Architecture Section ──────────────── */}
-      <section id="architecture" className="relative z-10 px-6 lg:px-12 py-24 border-t border-white/10" style={{ background: "rgba(6, 27, 51, 0.6)" }}>
-        <motion.div
-          className="max-w-5xl mx-auto rounded-3xl p-8 md:p-14 border relative overflow-hidden"
-          style={{
-            background: "rgba(11, 35, 65, 0.6)",
-            backdropFilter: "blur(24px)",
-            borderColor: "rgba(0, 184, 255, 0.25)",
-            boxShadow: "0 30px 60px rgba(0,0,0,0.4)",
-          }}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-5xl font-extrabold font-heading mb-4 text-white">
-              System <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#008C45] to-[#00B8FF]">Architecture</span>
-            </h2>
-            <p className="text-sm text-slate-300">
-              Cloud-native, microservices architecture engineered for high throughput and military-grade encryption.
-            </p>
-          </div>
 
-          <div className="flex flex-col items-center gap-5">
-            {/* Customer Layer */}
-            <motion.div
-              className="w-full max-w-xl p-5 rounded-2xl text-center border transition-all"
-              style={{ background: "rgba(0, 184, 255, 0.08)", borderColor: "rgba(0, 184, 255, 0.3)" }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <Globe className="w-6 h-6 mx-auto mb-2 text-[#00B8FF]" />
-              <div className="font-bold text-sm text-white font-heading">Omnichannel Delivery Layer</div>
-              <div className="text-xs text-slate-300 mt-1">Web Platform • iOS & Android Apps • Voice Bot • WhatsApp Banking</div>
-            </motion.div>
-
-            <Activity className="w-5 h-5 text-slate-500 animate-pulse" />
-
-            {/* AI Avatar Gateway */}
-            <motion.div
-              className="w-full max-w-xl p-5 rounded-2xl text-center border transition-all"
-              style={{ background: "rgba(248, 181, 0, 0.08)", borderColor: "rgba(248, 181, 0, 0.3)" }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <Bot className="w-6 h-6 mx-auto mb-2 text-[#F8B500]" />
-              <div className="font-bold text-sm text-white font-heading">AI Gateway & NLP Orchestra</div>
-              <div className="text-xs text-slate-300 mt-1">Real-time Intent Recognition + Multilingual LLM router (Hindi, English, Regional)</div>
-            </motion.div>
-
-            <Activity className="w-5 h-5 text-slate-500 animate-pulse" />
-
-            {/* AI Engine Layer */}
-            <motion.div
-              className="w-full max-w-2xl p-6 rounded-2xl border transition-all"
-              style={{ background: "rgba(0, 140, 69, 0.08)", borderColor: "rgba(0, 140, 69, 0.3)" }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <Brain className="w-6 h-6 mx-auto mb-3 text-[#008C45]" />
-              <div className="font-bold text-sm text-center mb-3 text-white font-heading">Microservices AI Engine Stack</div>
-              <div className="flex flex-wrap justify-center gap-2">
-                {["Wealth AI", "Prospect AI", "MSME Health", "Default Predictor", "Fraud Guard", "Document OCR", "Recommendation Matrix"].map((engine) => (
-                  <span key={engine} className="text-xs font-semibold px-3 py-1 rounded-full bg-[#008C45]/20 text-[#008C45] border border-[#008C45]/30">
-                    {engine}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-
-            <Activity className="w-5 h-5 text-slate-500 animate-pulse" />
-
-            {/* Data Layer */}
-            <motion.div
-              className="w-full max-w-xl p-5 rounded-2xl text-center border transition-all"
-              style={{ background: "rgba(16, 42, 77, 0.8)", borderColor: "rgba(255, 255, 255, 0.15)" }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <CreditCard className="w-6 h-6 mx-auto mb-2 text-cyan-400" />
-              <div className="font-bold text-sm text-white font-heading">Core Banking & Ledger Integration</div>
-              <div className="text-xs text-slate-300 mt-1">PostgreSQL • Vector DB • Redis Cache • Encrypted Cloud Storage</div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ─── Call To Action ─────────────────────────── */}
-      <section className="relative z-10 px-6 lg:px-12 py-24 max-w-5xl mx-auto text-center">
-        <motion.div
-          className="p-12 md:p-16 rounded-3xl relative overflow-hidden shadow-2xl border"
-          style={{
-            background: "linear-gradient(135deg, #008C45 0%, #061B33 50%, #00B8FF 100%)",
-            borderColor: "rgba(0, 184, 255, 0.4)",
-          }}
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-        >
-          <div className="relative z-10 max-w-2xl mx-auto">
-            <Star className="w-10 h-10 mx-auto mb-6 text-[#F8B500] animate-bounce" />
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 font-heading leading-tight">
-              Ready to Experience the Future of Banking?
-            </h2>
-            <p className="text-slate-200 text-lg mb-8 leading-relaxed">
-              Step into autonomous financial intelligence with IDBI AI OneBank.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
-              <Link href="/dashboard">
-                <motion.button
-                  className="text-base font-bold py-4 px-9 rounded-2xl flex items-center gap-3 text-[#061B33] bg-[#F8B500] shadow-xl transition-all"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Banknote className="w-5 h-5" />
-                  <span>Open Your AI Account</span>
-                  <ArrowRight className="w-5 h-5" />
-                </motion.button>
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      </section>
 
       {/* ─── Footer ─────────────────────────────────── */}
       <footer id="contact" className="relative z-10 px-6 lg:px-12 py-12 border-t border-white/10" style={{ background: "#041325" }}>

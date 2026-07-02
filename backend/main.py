@@ -8,13 +8,19 @@ from contextlib import asynccontextmanager
 from app.core.config import settings
 from app.core.database import init_db, async_session
 from app.core.seed_data import seed_database
-from app.api.v1.endpoints import auth, dashboard, ai, wealth, ai_modules
+from app.core.storage import init_storage
+from app.services.rag_service import seed_knowledge_base
+from app.api.v1.endpoints import auth, dashboard, ai, wealth, ai_modules, admin
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan: initialize database and seed data on startup."""
+    """Application lifespan: initialize database, storage and seed data on startup."""
     await init_db()
+    # Initialize MinIO S3 storage buckets
+    init_storage()
+    # Seed knowledge base vector embeddings for RAG chat
+    await seed_knowledge_base()
     async with async_session() as session:
         await seed_database(session)
         await session.commit()
@@ -36,6 +42,8 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+from app.core.middleware import SecurityHeadersMiddleware, RateLimitingMiddleware, AuditLoggingMiddleware
+
 # CORS
 app.add_middleware(
     CORSMiddleware,
@@ -45,11 +53,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Custom Security & Rate Limiting Middlewares
+app.add_middleware(SecurityHeadersMiddleware)
+app.add_middleware(RateLimitingMiddleware)
+app.add_middleware(AuditLoggingMiddleware)
+
 # Include routers
 app.include_router(auth.router, prefix=settings.API_V1_PREFIX)
 app.include_router(dashboard.router, prefix=settings.API_V1_PREFIX)
 app.include_router(ai.router, prefix=settings.API_V1_PREFIX)
 app.include_router(wealth.router, prefix=settings.API_V1_PREFIX)
+app.include_router(admin.router, prefix=settings.API_V1_PREFIX)
 app.include_router(ai_modules.prospect_router, prefix=settings.API_V1_PREFIX)
 app.include_router(ai_modules.msme_router, prefix=settings.API_V1_PREFIX)
 app.include_router(ai_modules.default_router, prefix=settings.API_V1_PREFIX)

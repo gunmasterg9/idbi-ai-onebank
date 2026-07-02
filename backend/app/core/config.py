@@ -22,8 +22,17 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./idbi_onebank.db"
 
-    # Redis
+    # Redis & Celery
     REDIS_URL: str = "redis://localhost:6379/0"
+    CELERY_BROKER_URL: str = "redis://localhost:6379/0"
+    CELERY_RESULT_BACKEND: str = "redis://localhost:6379/0"
+
+    # MinIO / S3 Object Storage
+    MINIO_ENDPOINT: str = "localhost:9000"
+    MINIO_ACCESS_KEY: str = "minioadmin"
+    MINIO_SECRET_KEY: str = "minioadmin"
+    MINIO_SECURE: bool = False
+    MINIO_BUCKET_NAME: str = "idbi-onebank-documents"
 
     # AI/LLM
     GEMINI_API_KEY: Optional[str] = None
@@ -45,6 +54,7 @@ class Settings(BaseSettings):
 
     model_config = {
         "env_file": ".env",
+        "extra": "ignore",
         "case_sensitive": True,
     }
 

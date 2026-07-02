@@ -83,7 +83,15 @@ function getAIResponse(message: string): { reply: string; suggestions: string[] 
 /* ─── Chat Page ──────────────────────────────────────── */
 
 export default function AIChatPage() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(() => [
+    {
+      id: "welcome",
+      role: "assistant",
+      content: aiResponses.default.reply,
+      timestamp: new Date(),
+      suggestions: aiResponses.default.suggestions,
+    }
+  ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [language, setLanguage] = useState("English");
@@ -93,18 +101,6 @@ export default function AIChatPage() {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  // Initial greeting
-  useEffect(() => {
-    const greeting: Message = {
-      id: "welcome",
-      role: "assistant",
-      content: aiResponses.default.reply,
-      timestamp: new Date(),
-      suggestions: aiResponses.default.suggestions,
-    };
-    setMessages([greeting]);
-  }, []);
 
   const sendMessage = async (text: string) => {
     if (!text.trim()) return;

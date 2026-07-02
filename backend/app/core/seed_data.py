@@ -92,7 +92,7 @@ async def seed_database(db: AsyncSession):
         print("Database already seeded. Skipping.")
         return
 
-    print("🌱 Seeding database with synthetic Indian banking data...")
+    print("[SEED] Seeding database with synthetic Indian banking data...")
 
     # ─── Demo User (primary login) ───────────────────────
     demo_user_id = uid()
@@ -359,5 +359,5 @@ async def seed_database(db: AsyncSession):
     db.add(msme)
 
     await db.flush()
-    print("✅ Database seeded successfully with synthetic Indian banking data!")
+    print("[SUCCESS] Database seeded successfully with synthetic Indian banking data!")
     print(f"   Demo login: phone=+911234567890, password=demo1234")

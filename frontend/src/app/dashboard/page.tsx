@@ -131,6 +131,7 @@ export default function DashboardPage() {
   const [showBalance, setShowBalance] = useState(true);
   const [activeModal, setActiveModal] = useState<"send" | "bills" | "fd" | null>(null);
   const [modalSuccess, setModalSuccess] = useState<string | null>(null);
+  const [txnId, setTxnId] = useState<string>("");
   const [transferAmount, setTransferAmount] = useState("5000");
   const [transferRecipient, setTransferRecipient] = useState("rahul@upi");
 
@@ -145,10 +146,12 @@ export default function DashboardPage() {
   };
 
   const executeAction = (msg: string) => {
+    setTxnId(`TXN${Math.floor(Math.random() * 899999 + 100000)}`);
     setModalSuccess(msg);
     setTimeout(() => {
       setActiveModal(null);
       setModalSuccess(null);
+      setTxnId("");
     }, 2000);
   };
 
@@ -529,7 +532,7 @@ export default function DashboardPage() {
                 <div className="text-center py-8 space-y-3">
                   <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto animate-bounce" />
                   <h3 className="text-lg font-bold text-white">{modalSuccess}</h3>
-                  <p className="text-xs text-slate-400">Transaction ID: TXN{Math.floor(Math.random()*899999+100000)}</p>
+                  <p className="text-xs text-slate-400">Transaction ID: {txnId}</p>
                 </div>
               ) : (
                 <>

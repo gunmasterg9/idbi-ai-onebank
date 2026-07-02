@@ -86,6 +86,7 @@ class User(Base):
     occupation = Column(String(100), nullable=True)
     annual_income = Column(Float, nullable=True)
     risk_appetite = Column(String(20), default="moderate")  # conservative, moderate, aggressive
+    role = Column(String(20), default="customer")  # customer, employee, admin
     is_active = Column(Boolean, default=True)
     is_kyc_verified = Column(Boolean, default=False)
     is_msme = Column(Boolean, default=False)
@@ -260,6 +261,8 @@ class FraudAlert(Base):
 
 # ─── AI Recommendation Model ────────────────────────────
 
+# ─── AI Recommendation Model ────────────────────────────
+
 class AIRecommendation(Base):
     __tablename__ = "ai_recommendations"
 
@@ -273,3 +276,88 @@ class AIRecommendation(Base):
     is_accepted = Column(Boolean, default=False)
     is_dismissed = Column(Boolean, default=False)
     created_at = Column(DateTime, default=utc_now)
+
+
+# ─── Audit Log Model ────────────────────────────────────
+
+class AuditLog(Base):
+    __tablename__ = "audit_logs"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    user_id = Column(String, ForeignKey("users.id"), nullable=True)
+    action = Column(String(100), nullable=False)  # e.g., login, transfer, file_upload
+    ip_address = Column(String(45), nullable=True)
+    user_agent = Column(String(255), nullable=True)
+    payload = Column(JSON, nullable=True)
+    timestamp = Column(DateTime, default=utc_now, index=True)
+
+    # Relationship
+    user = relationship("User")
+
+
+# ─── Feature Flag Model ─────────────────────────────────
+
+class FeatureFlag(Base):
+    __tablename__ = "feature_flags"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    key = Column(String(100), unique=True, index=True, nullable=False)
+    description = Column(String(255), nullable=True)
+    is_enabled = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=utc_now)
+    updated_at = Column(DateTime, default=utc_now, onupdate=utc_now)
+
+
+# ─── Database-agnostic Vector Type ─────────────────────
+
+from sqlalchemy import TypeDecorator, Text
+import json
+
+class SafeVector(TypeDecorator):
+    """Custom type to support pgvector on PostgreSQL and fallback to JSON on SQLite."""
+    impl = Text
+    cache_ok = True
+
+    def __init__(self, dimensions=None):
+        super().__init__()
+        self.dimensions = dimensions
+
+    def load_dialect_impl(self, dialect):
+        if dialect.name == "postgresql":
+            try:
+                from pgvector.sqlalchemy import Vector
+                return dialect.type_descriptor(Vector(self.dimensions))
+            except ImportError:
+                pass
+        return dialect.type_descriptor(Text())
+
+    def process_bind_param(self, value, dialect):
+        if value is None:
+            return None
+        if dialect.name == "postgresql":
+            return value
+        return json.dumps(value)
+
+    def process_result_value(self, value, dialect):
+        if value is None:
+            return None
+        if dialect.name == "postgresql":
+            return value
+        try:
+            return json.loads(value)
+        except Exception:
+            return value
+
+
+# ─── Knowledge Base Chunk (RAG) Model ───────────────────
+
+class KBChunk(Base):
+    __tablename__ = "kb_chunks"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    title = Column(String(255), nullable=False)
+    content = Column(Text, nullable=False)
+    metadata_info = Column(JSON, nullable=True)  # Named metadata_info to avoid metadata confusion
+    embedding = Column(SafeVector(768), nullable=True)  # Using 768 dimensions (standard Gemini/Google embeddings)
+    created_at = Column(DateTime, default=utc_now)
+

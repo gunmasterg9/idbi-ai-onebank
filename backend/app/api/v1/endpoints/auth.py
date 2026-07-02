@@ -47,7 +47,7 @@ async def register(request: RegisterRequest, db: AsyncSession = Depends(get_db))
     await db.flush()
 
     # Generate tokens
-    token_data = {"sub": user.id, "email": user.email}
+    token_data = {"sub": user.id, "email": user.email, "role": user.role}
     access_token = create_access_token(token_data)
     refresh_token = create_refresh_token(token_data)
 
@@ -75,7 +75,7 @@ async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)):
             detail="Invalid credentials"
         )
 
-    token_data = {"sub": user.id, "email": user.email}
+    token_data = {"sub": user.id, "email": user.email, "role": user.role}
     access_token = create_access_token(token_data)
     refresh_token = create_refresh_token(token_data)
 
@@ -87,13 +87,19 @@ async def login(request: LoginRequest, db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/refresh", response_model=TokenResponse)
-async def refresh_token(request: RefreshRequest):
+async def refresh_token(request: RefreshRequest, db: AsyncSession = Depends(get_db)):
     """Refresh access token."""
     payload = decode_token(request.refresh_token)
     if payload.get("type") != "refresh":
         raise HTTPException(status_code=400, detail="Invalid refresh token")
 
-    token_data = {"sub": payload["sub"], "email": payload.get("email", "")}
+    user_id = payload["sub"]
+    result = await db.execute(select(User).where(User.id == user_id))
+    user = result.scalar_one_or_none()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    token_data = {"sub": user.id, "email": user.email, "role": user.role}
     access_token = create_access_token(token_data)
     new_refresh = create_refresh_token(token_data)
 
