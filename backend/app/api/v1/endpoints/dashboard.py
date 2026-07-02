@@ -14,7 +14,7 @@ from app.models.models import (
 from app.schemas.schemas import (
     UserResponse, AccountResponse, TransactionResponse,
     CardResponse, LoanResponse, InvestmentResponse,
-    DashboardSummary, TransactionFilter
+    DashboardSummary
 )
 from typing import List
 
@@ -140,7 +140,7 @@ async def get_dashboard_summary(
 
     # Fetch investments
     inv_result = await db.execute(
-        select(Investment).where(Investment.user_id == user_id, Investment.is_active == True)
+        select(Investment).where(Investment.user_id == user_id, Investment.is_active)
     )
     investments = inv_result.scalars().all()
     total_investments = sum(i.current_value for i in investments)
@@ -150,7 +150,7 @@ async def get_dashboard_summary(
         select(Loan).where(Loan.user_id == user_id, Loan.status == "active")
     )
     loans = loans_result.scalars().all()
-    total_loans = sum(l.outstanding_amount for l in loans)
+    total_loans = sum(loan.outstanding_amount for loan in loans)
 
     # Fetch recent transactions
     account_ids = [a.id for a in accounts]
@@ -179,7 +179,7 @@ async def get_dashboard_summary(
     fraud_result = await db.execute(
         select(func.count(FraudAlert.id)).where(
             FraudAlert.user_id == user_id,
-            FraudAlert.is_resolved == False
+            FraudAlert.is_resolved.is_(False)
         )
     )
     fraud_count = fraud_result.scalar() or 0
@@ -188,7 +188,7 @@ async def get_dashboard_summary(
     rec_result = await db.execute(
         select(AIRecommendation).where(
             AIRecommendation.user_id == user_id,
-            AIRecommendation.is_dismissed == False
+            AIRecommendation.is_dismissed.is_(False)
         ).limit(5)
     )
     recs = rec_result.scalars().all()

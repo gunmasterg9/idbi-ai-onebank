@@ -3,7 +3,6 @@ IDBI AI OneBank — Celery Background Tasks
 Handles asynchronous jobs like document OCR extraction, S3 storage saving, and transactional fraud analysis.
 """
 from app.core.celery_app import celery
-from app.core.storage import upload_file
 from app.services.ocr_service import run_ocr
 from app.services.ml_engine import evaluate_transaction_fraud
 from app.core.database import async_session

@@ -3,10 +3,11 @@ IDBI AI OneBank — Database Models
 All SQLAlchemy ORM models for the banking platform.
 """
 import uuid
+import json
 from datetime import datetime, timezone
 from sqlalchemy import (
     Column, String, Float, Integer, Boolean, DateTime, Text,
-    ForeignKey, Enum as SQLEnum, JSON
+    ForeignKey, Enum as SQLEnum, JSON, TypeDecorator
 )
 from sqlalchemy.orm import relationship
 from app.core.database import Base
@@ -309,9 +310,6 @@ class FeatureFlag(Base):
 
 
 # ─── Database-agnostic Vector Type ─────────────────────
-
-from sqlalchemy import TypeDecorator, Text
-import json
 
 class SafeVector(TypeDecorator):
     """Custom type to support pgvector on PostgreSQL and fallback to JSON on SQLite."""

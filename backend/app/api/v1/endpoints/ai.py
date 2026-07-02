@@ -3,8 +3,13 @@ IDBI AI OneBank — AI Chat Endpoint
 Handles conversational AI requests for the banking avatar.
 """
 from fastapi import APIRouter, Depends
+import logging
 from app.core.security import get_current_user
 from app.schemas.schemas import ChatRequest, ChatResponse
+from app.core.config import settings
+from app.services.rag_service import query_knowledge_base, generate_llm_response
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/ai", tags=["AI Services"])
 
@@ -33,11 +38,6 @@ AI_RESPONSES = {
     }
 }
 
-
-import httpx
-from app.core.config import settings
-
-from app.services.rag_service import query_knowledge_base, generate_llm_response
 
 @router.post("/chat", response_model=ChatResponse)
 async def ai_chat(

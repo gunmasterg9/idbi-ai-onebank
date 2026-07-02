@@ -8,7 +8,11 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from app.core.config import settings
+from app.core.database import get_db
+from app.models.models import User
 
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -66,11 +70,6 @@ async def get_current_user(
         )
     return {"user_id": user_id, "email": payload.get("email", ""), "role": payload.get("role", "customer")}
 
-
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.database import get_db
-from app.models.models import User
-from sqlalchemy import select
 
 async def get_current_db_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),

@@ -2,10 +2,8 @@
 IDBI AI OneBank — Machine Learning Engines
 XGBoost, LightGBM, and SHAP-based credit risk, fraud, and MSME scoring engines.
 """
-import numpy as np
-import pandas as pd
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 logger = logging.getLogger(__name__)
 
@@ -175,9 +173,6 @@ def evaluate_transaction_fraud(
     Computes real-time anomaly/fraud scores for incoming payment transactions (UPI, ATM, Cards).
     """
     try:
-        # Build features array
-        features = np.array([amount, hour_of_day, distance_from_home, is_international, daily_spend_limit_percentage])
-        
         # Scoring logic based on common fraud indicators
         score = 0.0
         anomalies_detected = []

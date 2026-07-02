@@ -2,11 +2,11 @@
 IDBI AI OneBank — Admin Endpoints
 Handles user management, feature flags toggling, and audit log analysis. Restricted to admins.
 """
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, update
+from sqlalchemy import select
 from app.core.database import get_db
-from app.core.security import RoleChecker, get_current_db_user
+from app.core.security import RoleChecker
 from app.models.models import User, FeatureFlag, AuditLog
 from pydantic import BaseModel
 from typing import List, Optional

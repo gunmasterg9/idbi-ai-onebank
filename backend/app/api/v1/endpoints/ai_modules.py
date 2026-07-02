@@ -3,8 +3,6 @@ IDBI AI OneBank — Remaining AI Modules & APIs
 Prospect Assist, MSME Health, Default Prediction, Fraud AI, OCR, and Open Banking Sandbox.
 """
 from fastapi import APIRouter, File, UploadFile, Depends, HTTPException, status
-from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.database import get_db
 from app.core.security import get_current_user
 from app.core.storage import upload_file
 from app.services.ml_engine import (
@@ -14,7 +12,7 @@ from app.services.ml_engine import (
 )
 from app.tasks.tasks import process_document_ocr, evaluate_transaction_fraud_async
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Optional
 import uuid
 
 prospect_router = APIRouter(prefix="/prospect", tags=["Prospect Assist AI"])
@@ -167,7 +165,7 @@ async def extract_document(
     # 1. Upload to MinIO object storage
     try:
         s3_path = upload_file(content, object_name, file.content_type)
-    except Exception as e:
+    except Exception:
         # Fallback path if MinIO client has connection issues in dev
         s3_path = f"s3://fallback-documents/{object_name}"
         

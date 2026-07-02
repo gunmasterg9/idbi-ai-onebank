@@ -5,7 +5,6 @@ Request/Response DTOs for all API endpoints.
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 from datetime import datetime
-from enum import Enum
 
 
 # ─── Auth Schemas ────────────────────────────────────────

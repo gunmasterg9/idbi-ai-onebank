@@ -360,4 +360,4 @@ async def seed_database(db: AsyncSession):
 
     await db.flush()
     print("[SUCCESS] Database seeded successfully with synthetic Indian banking data!")
-    print(f"   Demo login: phone=+911234567890, password=demo1234")
+    print("   Demo login: phone=+911234567890, password=demo1234")

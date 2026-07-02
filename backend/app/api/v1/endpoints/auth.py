@@ -12,7 +12,7 @@ from app.core.security import (
 from app.models.models import User
 from app.schemas.schemas import (
     RegisterRequest, LoginRequest, TokenResponse,
-    RefreshRequest, UserResponse
+    RefreshRequest
 )
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])

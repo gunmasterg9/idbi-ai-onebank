@@ -2,10 +2,9 @@
 IDBI AI OneBank — Wealth Management AI Engine
 Calculates SIP projections, portfolio rebalancing, FD optimization, and retirement planning.
 """
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 from pydantic import BaseModel
-from typing import List, Optional
-import math
+from typing import List
 
 router = APIRouter(prefix="/wealth", tags=["AI Wealth Management"])
 
@@ -29,8 +28,6 @@ async def calculate_sip(req: SIPRequest):
     est_returns = total_value - invested_amount
 
     breakdown = []
-    current_val = 0
-    current_inv = 0
     for yr in range(1, req.time_period_years + 1):
         months = yr * 12
         val = req.monthly_investment * (((1 + i)**months - 1) / i) * (1 + i)
