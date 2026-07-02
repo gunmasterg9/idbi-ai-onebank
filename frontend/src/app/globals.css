@@ -4,62 +4,62 @@
 
 :root {
   /* Specified Color Palette */
-  --idbi-green: #008C45;
-  --dark-navy: #061B33;
+  --idbi-green: #00A651;
+  --dark-navy: #005BAC;
   --white: #FFFFFF;
-  --soft-gray: #F5F7FA;
-  --accent-blue: #00B8FF;
-  --gold-accent: #F8B500;
+  --soft-gray: #F5F8FC;
+  --accent-blue: #005BAC;
+  --gold-accent: #FF8800;
 
   /* Legacy Brand Aliases */
-  --idbi-blue: #008C45;
-  --idbi-blue-light: #00B8FF;
-  --idbi-blue-dark: #061B33;
-  --idbi-red: #E31E24;
-  --idbi-gold: #F8B500;
-  --idbi-gold-dim: #B8960C;
+  --idbi-blue: #005BAC;
+  --idbi-blue-light: #0088FF;
+  --idbi-blue-dark: #004b93;
+  --idbi-red: #ef4444;
+  --idbi-gold: #FF8800;
+  --idbi-gold-dim: #b45f06;
 
-  /* Dark Theme (Default) */
-  --bg-primary: #061B33;
-  --bg-secondary: #0b2341;
-  --bg-card: rgba(11, 35, 65, 0.65);
-  --bg-card-hover: rgba(16, 47, 85, 0.85);
-  --bg-elevated: #102a4d;
-  --bg-glass: rgba(6, 27, 51, 0.7);
+  /* Light Theme (New Default) */
+  --bg-primary: #F5F8FC;
+  --bg-secondary: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --bg-elevated: #FFFFFF;
+  --bg-glass: rgba(255, 255, 255, 0.75);
 
-  --text-primary: #FFFFFF;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --text-accent: #00B8FF;
+  --text-primary: #0C1A30;
+  --text-secondary: #495E74;
+  --text-muted: #8295A9;
+  --text-accent: #005BAC;
 
-  --border-default: rgba(255, 255, 255, 0.1);
-  --border-hover: rgba(0, 184, 255, 0.35);
+  --border-default: rgba(0, 91, 172, 0.08);
+  --border-hover: rgba(0, 91, 172, 0.25);
 
   /* Accent Colors */
-  --accent-green: #008C45;
-  --accent-green-bg: rgba(0, 140, 69, 0.15);
+  --accent-green: #00A651;
+  --accent-green-bg: rgba(0, 166, 81, 0.12);
   --accent-red: #ef4444;
-  --accent-red-bg: rgba(239, 68, 68, 0.15);
-  --accent-yellow: #F8B500;
-  --accent-yellow-bg: rgba(248, 181, 0, 0.15);
+  --accent-red-bg: rgba(239, 68, 68, 0.12);
+  --accent-yellow: #FF8800;
+  --accent-yellow-bg: rgba(255, 136, 0, 0.12);
   --accent-purple: #a855f7;
-  --accent-purple-bg: rgba(168, 85, 247, 0.15);
-  --accent-cyan: #00B8FF;
-  --accent-cyan-bg: rgba(0, 184, 255, 0.15);
+  --accent-purple-bg: rgba(168, 85, 247, 0.12);
+  --accent-cyan: #005BAC;
+  --accent-cyan-bg: rgba(0, 91, 172, 0.12);
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #008C45 0%, #00B8FF 100%);
-  --gradient-gold: linear-gradient(135deg, #F8B500 0%, #FFA500 100%);
-  --gradient-card: linear-gradient(135deg, rgba(11, 35, 65, 0.8) 0%, rgba(16, 47, 85, 0.6) 100%);
-  --gradient-hero: radial-gradient(circle at 50% 20%, rgba(0, 184, 255, 0.18) 0%, rgba(0, 140, 69, 0.15) 35%, #061B33 80%);
+  --gradient-primary: linear-gradient(135deg, #005BAC 0%, #00A651 100%);
+  --gradient-gold: linear-gradient(135deg, #FF8800 0%, #FFA500 100%);
+  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 248, 252, 0.95) 100%);
+  --gradient-hero: radial-gradient(circle at 50% 20%, rgba(0, 91, 172, 0.05) 0%, rgba(0, 166, 81, 0.04) 40%, #F5F8FC 85%);
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 35px rgba(0, 184, 255, 0.25);
-  --shadow-gold-glow: 0 0 30px rgba(248, 181, 0, 0.25);
+  --shadow-sm: 0 2px 4px rgba(0, 91, 172, 0.03);
+  --shadow-md: 0 8px 16px rgba(0, 91, 172, 0.04);
+  --shadow-lg: 0 12px 24px rgba(0, 91, 172, 0.06);
+  --shadow-xl: 0 20px 40px rgba(0, 91, 172, 0.08);
+  --shadow-glow: 0 0 25px rgba(0, 91, 172, 0.08);
+  --shadow-gold-glow: 0 0 25px rgba(255, 136, 0, 0.12);
 
   /* Spacing */
   --sidebar-width: 280px;
@@ -95,20 +95,20 @@ html {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--dark-navy);
+  background: var(--bg-primary);
   color: var(--text-primary);
   overflow-x: hidden;
   min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
 }
 
 .font-heading {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .font-body {
