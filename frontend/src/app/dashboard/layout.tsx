@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
@@ -21,6 +21,8 @@ import {
   Bell,
   Search,
   ChevronDown,
+  Sun,
+  Moon,
   LogOut,
   Banknote,
   Globe,
@@ -49,6 +51,23 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
+  const toggleTheme = () => {
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDark(true);
+    }
+  };
 
   return (
     <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
@@ -166,6 +185,20 @@ export default function DashboardLayout({
             <span>Customer ID: <strong className="text-white">10098421</strong></span>
             <span>Last Login: <strong className="text-slate-300">28-Jun-2026 11:30 PM IST</strong></span>
           </div>
+
+          {/* Theme Toggle */}
+          <button
+            className="p-2 rounded-lg transition-colors hover:opacity-90"
+            style={{ background: "var(--bg-card)" }}
+            onClick={toggleTheme}
+            aria-label="Toggle Dark Mode"
+          >
+            {isDark ? (
+              <Sun className="w-5 h-5 text-yellow-400" />
+            ) : (
+              <Moon className="w-5 h-5" style={{ color: "var(--text-secondary)" }} />
+            )}
+          </button>
 
           {/* Notifications */}
           <button

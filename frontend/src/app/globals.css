@@ -79,6 +79,34 @@
   --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.dark {
+  /* Dark Theme */
+  --bg-primary: #080C17;        /* Deep midnight blue-black */
+  --bg-secondary: #0F1322;      /* Midnight slate */
+  --bg-card: rgba(15, 19, 34, 0.85);
+  --bg-card-hover: rgba(15, 19, 34, 0.95);
+  --bg-elevated: #151B30;       /* Midnight card elevation */
+  --bg-glass: rgba(15, 19, 34, 0.75);
+
+  --text-primary: #E2E8F0;      /* Slate-200 */
+  --text-secondary: #94A3B8;    /* Slate-400 */
+  --text-muted: #64748B;        /* Slate-500 */
+  --text-accent: #38BDF8;       /* Light blue / Cyan */
+
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.18);
+
+  --gradient-card: linear-gradient(135deg, rgba(15, 19, 34, 0.95) 0%, rgba(21, 27, 48, 0.95) 100%);
+  --gradient-hero: radial-gradient(circle at 50% 20%, rgba(0, 91, 172, 0.15) 0%, rgba(0, 166, 81, 0.08) 40%, #080C17 85%);
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 25px rgba(0, 184, 255, 0.08);
+}
+
+
 /* ─── Base Styles ────────────────────────────────────── */
 
 * {
@@ -580,7 +608,7 @@ h1, h2, h3, h4, h5, h6 {
   left: var(--sidebar-width);
   right: 0;
   height: var(--topbar-height);
-  background: rgba(10, 14, 26, 0.8);
+  background: var(--bg-glass);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border-default);
   z-index: 40;

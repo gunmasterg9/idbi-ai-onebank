@@ -1,12 +1,30 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Landmark, Shield, Lock, ChevronRight, User, Bell, Search, Globe, Sparkles } from "lucide-react";
+import { Landmark, Shield, Lock, ChevronRight, User, Bell, Search, Globe, Sparkles, Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains("dark"));
+  }, []);
+
+  const toggleTheme = () => {
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDark(true);
+    }
+  };
 
   const navLinks = [
     { name: "Overview", href: "/" },
@@ -19,7 +37,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/85 border-b border-[var(--border-default)] transition-all">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-[var(--bg-glass)] border-b border-[var(--border-default)] transition-all">
       {/* Top Professional Institutional Ticker */}
       <div className="bank-ticker-bar px-6 py-1.5 flex justify-between items-center text-[11px] font-semibold tracking-wide bg-[var(--idbi-blue)] text-white">
         <div className="flex items-center gap-6">
@@ -45,7 +63,7 @@ export default function Navbar() {
       </div>
 
       {/* Main Navigation Row */}
-      <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md transition-transform group-hover:scale-105"
@@ -70,7 +88,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all relative ${
+                className={`px-2.5 py-2 rounded-xl text-xs font-semibold transition-all relative ${
                   isActive
                     ? "text-white bg-[var(--idbi-blue)] shadow-sm"
                     : "text-[var(--text-secondary)] hover:text-[var(--idbi-blue)] hover:bg-[var(--idbi-blue)]/5"
@@ -84,6 +102,20 @@ export default function Navbar() {
 
         {/* Right Action Controls */}
         <div className="flex items-center gap-3">
+          {/* Theme Toggle */}
+          <button
+            className="p-2 rounded-xl transition-colors hover:opacity-90 border border-[var(--border-default)]"
+            style={{ background: "var(--bg-card)" }}
+            onClick={toggleTheme}
+            aria-label="Toggle Dark Mode"
+          >
+            {isDark ? (
+              <Sun className="w-4 h-4 text-yellow-400 animate-pulse" />
+            ) : (
+              <Moon className="w-4 h-4" style={{ color: "var(--text-secondary)" }} />
+            )}
+          </button>
+
           <Link href="/ai-chat">
             <motion.button
               className="px-3.5 py-2 rounded-xl text-xs font-bold text-[var(--idbi-blue)] flex items-center gap-2 border border-[var(--idbi-blue)]/30 bg-[var(--idbi-blue)]/5 hover:bg-[var(--idbi-blue)]/10 transition-all"
