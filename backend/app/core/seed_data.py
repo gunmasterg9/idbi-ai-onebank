@@ -116,6 +116,27 @@ async def seed_database(db: AsyncSession):
     )
     db.add(demo_user)
 
+    # ─── Additional Users ────────────────────────────────
+    for i, name in enumerate(INDIAN_NAMES[1:10]):
+        city, state, pin = random.choice(INDIAN_CITIES)
+        user = User(
+            id=uid(),
+            email=f"user{i+1}@idbibank.co.in",
+            phone=f"+91{random.randint(7000000000, 9999999999)}",
+            hashed_password=get_password_hash("password123"),
+            full_name=name,
+            city=city, state=state, pincode=pin,
+            occupation=random.choice(["Engineer", "Doctor", "Teacher", "Business Owner", "CA", "Manager"]),
+            annual_income=random.randint(400000, 3000000),
+            risk_appetite=random.choice(["conservative", "moderate", "aggressive"]),
+            is_active=True,
+            is_kyc_verified=random.random() > 0.2,
+            is_msme=random.random() > 0.7,
+        )
+        db.add(user)
+
+    await db.flush() # Flush all users first to satisfy foreign key dependencies
+
     # ─── Demo User Accounts ──────────────────────────────
     savings_id = uid()
     current_id = uid()
@@ -141,6 +162,8 @@ async def seed_database(db: AsyncSession):
     )
     db.add(savings_acc)
     db.add(current_acc)
+
+    await db.flush() # Flush accounts to satisfy transaction foreign keys
 
     # ─── Demo User Transactions (last 6 months) ─────────
     categories = list(MERCHANTS.keys())
@@ -314,25 +337,6 @@ async def seed_database(db: AsyncSession):
     for alert in fraud_alerts:
         db.add(alert)
 
-    # ─── Additional Users ────────────────────────────────
-    for i, name in enumerate(INDIAN_NAMES[1:10]):
-        city, state, pin = random.choice(INDIAN_CITIES)
-        user = User(
-            id=uid(),
-            email=f"user{i+1}@idbibank.co.in",
-            phone=f"+91{random.randint(7000000000, 9999999999)}",
-            hashed_password=get_password_hash("password123"),
-            full_name=name,
-            city=city, state=state, pincode=pin,
-            occupation=random.choice(["Engineer", "Doctor", "Teacher", "Business Owner", "CA", "Manager"]),
-            annual_income=random.randint(400000, 3000000),
-            risk_appetite=random.choice(["conservative", "moderate", "aggressive"]),
-            is_active=True,
-            is_kyc_verified=random.random() > 0.2,
-            is_msme=random.random() > 0.7,
-        )
-        db.add(user)
-
     # ─── MSME Business ───────────────────────────────────
     msme = MSMEBusiness(
         id=uid(), user_id=demo_user_id,
@@ -357,10 +361,6 @@ async def seed_database(db: AsyncSession):
         },
     )
     db.add(msme)
-
-    print("NEW OBJECTS IN SESSION:", len(db.new))
-    for obj in list(db.new):
-        print(f"  - {type(obj).__name__}: {getattr(obj, 'id', None)}")
 
     await db.flush()
     print("[SUCCESS] Database seeded successfully with synthetic Indian banking data!")
