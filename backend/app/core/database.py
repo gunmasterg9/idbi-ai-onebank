@@ -49,6 +49,12 @@ async def get_db() -> AsyncSession:
 
 async def init_db():
     """Create all tables on startup."""
+    # Enable pgvector extension if we are on PostgreSQL
+    if settings.DATABASE_URL.startswith("postgresql"):
+        async with engine.begin() as conn:
+            from sqlalchemy import text
+            await conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
+
     async with engine.begin() as conn:
         # SQLite doesn't natively support all DDL/migrations easily, 
         # but conn.run_sync creates standard tables.
