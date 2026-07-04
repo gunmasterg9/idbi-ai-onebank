@@ -76,8 +76,8 @@ def uid():
 
 
 def random_date(start_year=2023, end_year=2026):
-    start = datetime(start_year, 1, 1, tzinfo=timezone.utc)
-    end = datetime(end_year, 6, 28, tzinfo=timezone.utc)
+    start = datetime(start_year, 1, 1)
+    end = datetime(end_year, 6, 28)
     delta = end - start
     return start + timedelta(seconds=random.randint(0, int(delta.total_seconds())))
 
@@ -103,7 +103,7 @@ async def seed_database(db: AsyncSession):
         hashed_password=get_password_hash("demo1234"),
         full_name="Rajesh Kumar Sharma",
         pan_number="ABCPS1234D",
-        date_of_birth=datetime(1992, 5, 15, tzinfo=timezone.utc),
+        date_of_birth=datetime(1992, 5, 15),
         city="Mumbai",
         state="Maharashtra",
         pincode="400001",
@@ -216,8 +216,8 @@ async def seed_database(db: AsyncSession):
             loan_type="home", principal_amount=4500000,
             outstanding_amount=3850000, interest_rate=8.5,
             tenure_months=240, emi_amount=38500,
-            disbursement_date=datetime(2022, 3, 15, tzinfo=timezone.utc),
-            next_emi_date=datetime(2026, 7, 5, tzinfo=timezone.utc),
+            disbursement_date=datetime(2022, 3, 15),
+            next_emi_date=datetime(2026, 7, 5),
             status=LoanStatus.ACTIVE, default_probability=0.03,
             risk_level=RiskLevel.LOW, collateral="Flat in Andheri West, Mumbai",
         ),
@@ -226,8 +226,8 @@ async def seed_database(db: AsyncSession):
             loan_type="vehicle", principal_amount=800000,
             outstanding_amount=320000, interest_rate=9.2,
             tenure_months=60, emi_amount=16500,
-            disbursement_date=datetime(2023, 8, 10, tzinfo=timezone.utc),
-            next_emi_date=datetime(2026, 7, 10, tzinfo=timezone.utc),
+            disbursement_date=datetime(2023, 8, 10),
+            next_emi_date=datetime(2026, 7, 10),
             status=LoanStatus.ACTIVE, default_probability=0.05,
             risk_level=RiskLevel.LOW,
         ),
@@ -300,7 +300,7 @@ async def seed_database(db: AsyncSession):
             alert_type="upi", severity=RiskLevel.MEDIUM,
             description="Unusual UPI transaction of ₹9,999 to an unknown merchant at 2:30 AM",
             amount=9999, is_resolved=False,
-            created_at=datetime(2026, 6, 25, 2, 30, tzinfo=timezone.utc),
+            created_at=datetime(2026, 6, 25, 2, 30),
         ),
         FraudAlert(
             id=uid(), user_id=demo_user_id,
@@ -308,7 +308,7 @@ async def seed_database(db: AsyncSession):
             description="Credit card used at a new international merchant",
             amount=15000, is_resolved=True,
             resolution="Verified by customer",
-            created_at=datetime(2026, 6, 20, 14, 15, tzinfo=timezone.utc),
+            created_at=datetime(2026, 6, 20, 14, 15),
         ),
     ]
     for alert in fraud_alerts:
