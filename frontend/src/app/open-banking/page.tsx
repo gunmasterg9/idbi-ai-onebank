@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Globe, Code, Terminal, Key, ShieldCheck, Play } from "lucide-react";
+import { Code, Terminal, Key, ShieldCheck, Play } from "lucide-react";
 
 const apis = [
   { name: "Account Aggregator API", method: "GET", path: "/api/v1/open-banking/aa/fetch", desc: "Fetches consent-based aggregated bank statements across financial institutions." },

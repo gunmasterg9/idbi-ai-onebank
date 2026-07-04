@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Landmark, Shield, Lock, ChevronRight, User, Bell, Search, Globe, Sparkles, Sun, Moon } from "lucide-react";
+import { Landmark, Lock, ChevronRight, User, Globe, Sparkles, Sun, Moon } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Navbar() {

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Users, Landmark, Building, ShieldAlert, TrendingUp, CheckCircle } from "lucide-react";
 
 export default function AdminPage() {
   return (

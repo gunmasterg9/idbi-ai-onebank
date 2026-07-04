@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Settings as SettingsIcon, Shield, Bell, Lock, Smartphone, User } from "lucide-react";
+import { Shield, User } from "lucide-react";
 
 export default function SettingsPage() {
   return (

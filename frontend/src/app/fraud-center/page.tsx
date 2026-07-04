@@ -7,16 +7,10 @@ import {
   Zap, Filter, Bell,
 } from "lucide-react";
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer,
+  AreaChart, Area, XAxis,
 } from "recharts";
 
-const fraudTrend = [
-  { day: "Mon", alerts: 2 }, { day: "Tue", alerts: 0 },
-  { day: "Wed", alerts: 1 }, { day: "Thu", alerts: 3 },
-  { day: "Fri", alerts: 0 }, { day: "Sat", alerts: 1 },
-  { day: "Sun", alerts: 0 },
-];
+
 
 const alerts = [
   {

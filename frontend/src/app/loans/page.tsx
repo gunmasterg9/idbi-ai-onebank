@@ -4,8 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Banknote, Home, Car, GraduationCap, Briefcase,
-  Calculator, ArrowRight, CheckCircle2, Clock,
-  TrendingDown, IndianRupee, Percent, Calendar,
+  Calculator, Calendar,
 } from "lucide-react";
 
 const activeLoans = [

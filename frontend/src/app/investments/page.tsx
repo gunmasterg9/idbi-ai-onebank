@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import {
-  TrendingUp, TrendingDown, PiggyBank, BarChart3,
-  ArrowUpRight, Plus, Filter, IndianRupee,
+  TrendingUp, PiggyBank, BarChart3,
+  ArrowUpRight, Plus, Filter,
 } from "lucide-react";
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,

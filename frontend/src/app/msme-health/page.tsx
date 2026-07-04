@@ -2,12 +2,10 @@
 
 import { motion } from "framer-motion";
 import {
-  Building2, TrendingUp, TrendingDown, AlertTriangle,
-  CheckCircle2, ArrowUpRight, BarChart3, Zap,
-  Target, FileText, Activity,
+  TrendingUp, Zap,
 } from "lucide-react";
 import {
-  AreaChart, Area, XAxis, YAxis, Tooltip,
+  XAxis, YAxis, Tooltip,
   ResponsiveContainer, RadarChart, Radar, PolarGrid,
   PolarAngleAxis, PolarRadiusAxis, BarChart, Bar, CartesianGrid,
 } from "recharts";
@@ -21,11 +19,7 @@ const healthMetrics = [
   { metric: "Growth", score: 85 },
 ];
 
-const revenueTrend = [
-  { month: "Jan", revenue: 350000 }, { month: "Feb", revenue: 380000 },
-  { month: "Mar", revenue: 420000 }, { month: "Apr", revenue: 390000 },
-  { month: "May", revenue: 450000 }, { month: "Jun", revenue: 480000 },
-];
+
 
 const cashFlowData = [
   { month: "Jan", inflow: 380000, outflow: 310000 },
