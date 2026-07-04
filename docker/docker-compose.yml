@@ -108,6 +108,7 @@ services:
       - "3000:3000"
     environment:
       - NEXT_PUBLIC_API_URL=http://${VM_IP:-localhost}:8000
+      - VM_IP=${VM_IP:-localhost}
     depends_on:
       - backend
     volumes:
