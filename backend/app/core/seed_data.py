@@ -358,6 +358,10 @@ async def seed_database(db: AsyncSession):
     )
     db.add(msme)
 
+    print("NEW OBJECTS IN SESSION:", len(db.new))
+    for obj in list(db.new):
+        print(f"  - {type(obj).__name__}: {getattr(obj, 'id', None)}")
+
     await db.flush()
     print("[SUCCESS] Database seeded successfully with synthetic Indian banking data!")
     print("   Demo login: phone=+911234567890, password=demo1234")
